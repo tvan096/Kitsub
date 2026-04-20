@@ -1,5 +1,6 @@
 // Summary: Coordinates media tooling operations across ffmpeg, ffprobe, and mkvmerge.
 using Kitsub.Core;
+using Kitsub.Tooling.Translation;
 
 namespace Kitsub.Tooling;
 
@@ -10,19 +11,26 @@ public sealed class KitsubService
     private readonly MkvmergeClient _mkvmerge;
     private readonly MkvmergeMuxer _mkvmergeMuxer;
     private readonly FfmpegClient _ffmpeg;
+    private readonly SubtitleTranslationService _subtitleTranslation;
 
     /// <summary>Initializes a new instance with the required tooling clients.</summary>
     /// <param name="ffprobe">The ffprobe client used for media inspection.</param>
     /// <param name="mkvmerge">The mkvmerge client used for MKV inspection.</param>
     /// <param name="mkvmergeMuxer">The mkvmerge muxer used for MKV modifications.</param>
     /// <param name="ffmpeg">The ffmpeg client used for media processing.</param>
-    public KitsubService(FfprobeClient ffprobe, MkvmergeClient mkvmerge, MkvmergeMuxer mkvmergeMuxer, FfmpegClient ffmpeg)
+    public KitsubService(
+        FfprobeClient ffprobe,
+        MkvmergeClient mkvmerge,
+        MkvmergeMuxer mkvmergeMuxer,
+        FfmpegClient ffmpeg,
+        SubtitleTranslationService subtitleTranslation)
     {
         // Block: Store tooling clients used across service operations.
         _ffprobe = ffprobe;
         _mkvmerge = mkvmerge;
         _mkvmergeMuxer = mkvmergeMuxer;
         _ffmpeg = ffmpeg;
+        _subtitleTranslation = subtitleTranslation;
     }
 
     /// <summary>Inspects a media file and returns metadata along with MKV detection.</summary>
@@ -184,6 +192,20 @@ public sealed class KitsubService
     {
         // Block: Delegate subtitle conversion to the ffmpeg client.
         await _ffmpeg.ConvertSubtitleAsync(inputFile, outputFile, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>Translates a subtitle file with OpenAI while preserving its format and encoding.</summary>
+    /// <param name="inputFile">The input subtitle file path.</param>
+    /// <param name="outputFile">The output subtitle file path.</param>
+    /// <param name="options">The OpenAI translation options.</param>
+    /// <param name="cancellationToken">The token used to cancel the operation.</param>
+    public Task TranslateSubtitleAsync(
+        string inputFile,
+        string outputFile,
+        SubtitleTranslationOptions options,
+        CancellationToken cancellationToken)
+    {
+        return _subtitleTranslation.TranslateFileAsync(inputFile, outputFile, options, cancellationToken);
     }
 
     /// <summary>Extracts a subtitle track to a temporary file and returns the path.</summary>

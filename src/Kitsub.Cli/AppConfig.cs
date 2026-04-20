@@ -18,6 +18,9 @@ public sealed class AppConfig
     [JsonPropertyName("ui")]
     public UiConfig Ui { get; init; } = new();
 
+    [JsonPropertyName("openai")]
+    public OpenAiConfig OpenAi { get; init; } = new();
+
     [JsonPropertyName("defaults")]
     public DefaultsConfig Defaults { get; init; } = new();
 }
@@ -91,6 +94,19 @@ public sealed class UiConfig
     public UiProgressMode? Progress { get; init; }
 }
 
+/// <summary>Represents configuration for OpenAI subtitle translation.</summary>
+public sealed class OpenAiConfig
+{
+    [JsonPropertyName("apiKey")]
+    public string? ApiKey { get; init; }
+
+    [JsonPropertyName("model")]
+    public string? Model { get; init; }
+
+    [JsonPropertyName("baseUrl")]
+    public string? BaseUrl { get; init; }
+}
+
 /// <summary>Represents default values for command-specific operations.</summary>
 public sealed class DefaultsConfig
 {
@@ -99,6 +115,9 @@ public sealed class DefaultsConfig
 
     [JsonPropertyName("mux")]
     public MuxDefaults Mux { get; init; } = new();
+
+    [JsonPropertyName("translate")]
+    public TranslateDefaults Translate { get; init; } = new();
 }
 
 /// <summary>Represents default values for burn operations.</summary>
@@ -128,4 +147,14 @@ public sealed class MuxDefaults
 
     [JsonPropertyName("defaultForcedFlag")]
     public bool? DefaultForcedFlag { get; init; }
+}
+
+/// <summary>Represents default values for subtitle translation operations.</summary>
+public sealed class TranslateDefaults
+{
+    [JsonPropertyName("sourceLanguage")]
+    public string? SourceLanguage { get; init; }
+
+    [JsonPropertyName("targetLanguage")]
+    public string? TargetLanguage { get; init; }
 }

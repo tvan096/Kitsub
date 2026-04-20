@@ -25,6 +25,10 @@ public class AppConfigDefaultsTests
         config.Ui.NoBanner.Should().BeFalse();
         config.Ui.NoColor.Should().BeFalse();
         config.Ui.Progress.Should().Be(UiProgressMode.Auto);
+        config.OpenAi.ApiKey.Should().BeNull();
+        config.OpenAi.Model.Should().Be("gpt-4o-mini");
+        config.Defaults.Translate.SourceLanguage.Should().Be("en");
+        config.Defaults.Translate.TargetLanguage.Should().BeNull();
         config.Defaults.Burn.Crf.Should().Be(18);
         config.Defaults.Burn.Preset.Should().Be("medium");
     }

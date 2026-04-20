@@ -257,6 +257,29 @@ public static class ValidationHelpers
         return ValidationResult.Error($"Unsupported subtitle conversion: {inputExtension} -> {outputExtension}. Fix: use .srt -> .ass.");
     }
 
+    public static ValidationResult ValidateSubtitleTranslation(string inputPath, string outputPath)
+    {
+        var inputExtension = Path.GetExtension(inputPath).ToLowerInvariant();
+        var outputExtension = Path.GetExtension(outputPath).ToLowerInvariant();
+
+        if (!SupportedSubtitleExtensions.Contains(inputExtension))
+        {
+            return ValidationResult.Error("Input subtitle file must be .srt, .ass, or .ssa. Fix: provide a supported subtitle file.");
+        }
+
+        if (!SupportedSubtitleExtensions.Contains(outputExtension))
+        {
+            return ValidationResult.Error("Output subtitle file must be .srt, .ass, or .ssa. Fix: choose a supported subtitle extension.");
+        }
+
+        if (!string.Equals(inputExtension, outputExtension, StringComparison.OrdinalIgnoreCase))
+        {
+            return ValidationResult.Error($"Subtitle translation must keep the same format: {inputExtension} -> {outputExtension}. Fix: use the same subtitle extension for --in and --out.");
+        }
+
+        return ValidationResult.Success();
+    }
+
     public static ValidationResult ValidateTrackSelectorSyntax(string? selector)
     {
         if (string.IsNullOrWhiteSpace(selector))

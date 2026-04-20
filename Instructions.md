@@ -90,6 +90,20 @@ kitsub extract sub --in "INPUT_FILE" --track "TRACK_SELECTOR" --out "OUTPUT_SUB"
 
 **Result:** A subtitle file is written to the output path.
 
+### Example: Translate a subtitle file
+
+**Inputs:**
+- `INPUT_SUB` — input subtitle file (placeholder)
+- `OUTPUT_SUB` — output subtitle file (placeholder)
+
+**Command:**
+
+```bash
+kitsub translate sub --in "INPUT_SUB" --out "OUTPUT_SUB" --to cs
+```
+
+**Result:** A translated subtitle file is written to the output path.
+
 ## CLI reference
 
 | Command | Purpose |
@@ -103,6 +117,7 @@ kitsub extract sub --in "INPUT_FILE" --track "TRACK_SELECTOR" --out "OUTPUT_SUB"
 | `extract sub` | Extract subtitle track. |
 | `extract video` | Extract video track. |
 | `convert sub` | Convert subtitle file. |
+| `translate sub` | Translate subtitle file with OpenAI. |
 | `tools status` | Show resolved tool paths. |
 | `tools fetch` | Download and cache tool binaries. |
 | `tools clean` | Delete extracted tool cache. |

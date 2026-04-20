@@ -63,6 +63,11 @@ public static class ExamplesRegistry
                 "kitsub convert sub --in subs.ass --out subs.srt",
                 "kitsub convert sub --in subs.ssa --out subs.ass"
             },
+            ["translate sub"] = new[]
+            {
+                "kitsub translate sub --in subs.en.srt --out subs.cs.srt --to cs",
+                "kitsub translate sub --in signs.ass --out signs.cs.ass --from en --to cs"
+            },
             ["release mux"] = new[]
             {
                 "kitsub release mux --in video.mkv --sub subs.ass --out release.mkv",

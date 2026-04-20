@@ -37,6 +37,12 @@ public static class AppConfigDefaults
                 NoColor = false,
                 Progress = UiProgressMode.Auto
             },
+            OpenAi = new OpenAiConfig
+            {
+                ApiKey = null,
+                Model = "gpt-4o-mini",
+                BaseUrl = null
+            },
             Defaults = new DefaultsConfig
             {
                 Burn = new BurnDefaults
@@ -51,6 +57,11 @@ public static class AppConfigDefaults
                     DefaultTrackName = null,
                     DefaultDefaultFlag = null,
                     DefaultForcedFlag = null
+                },
+                Translate = new TranslateDefaults
+                {
+                    SourceLanguage = "en",
+                    TargetLanguage = null
                 }
             }
         };

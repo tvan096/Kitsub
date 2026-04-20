@@ -209,6 +209,12 @@ public sealed class AppConfigLoader
             }
         }
 
+        if (!string.IsNullOrWhiteSpace(config.OpenAi.BaseUrl) &&
+            !Uri.TryCreate(config.OpenAi.BaseUrl, UriKind.Absolute, out _))
+        {
+            throw new ConfigurationException("OpenAI baseUrl must be an absolute URI. Fix: update openai.baseUrl to a valid absolute URL.");
+        }
+
         ValidateToolPath(config.Tools.Ffmpeg, "ffmpeg");
         ValidateToolPath(config.Tools.Ffprobe, "ffprobe");
         ValidateToolPath(config.Tools.Mkvmerge, "mkvmerge");
@@ -287,6 +293,12 @@ public sealed class AppConfigLoader
                 NoColor = overrideConfig.Ui.NoColor ?? baseConfig.Ui.NoColor,
                 Progress = overrideConfig.Ui.Progress ?? baseConfig.Ui.Progress
             },
+            OpenAi = new OpenAiConfig
+            {
+                ApiKey = overrideConfig.OpenAi.ApiKey ?? baseConfig.OpenAi.ApiKey,
+                Model = overrideConfig.OpenAi.Model ?? baseConfig.OpenAi.Model,
+                BaseUrl = overrideConfig.OpenAi.BaseUrl ?? baseConfig.OpenAi.BaseUrl
+            },
             Defaults = new DefaultsConfig
             {
                 Burn = new BurnDefaults
@@ -301,6 +313,11 @@ public sealed class AppConfigLoader
                     DefaultTrackName = overrideConfig.Defaults.Mux.DefaultTrackName ?? baseConfig.Defaults.Mux.DefaultTrackName,
                     DefaultDefaultFlag = overrideConfig.Defaults.Mux.DefaultDefaultFlag ?? baseConfig.Defaults.Mux.DefaultDefaultFlag,
                     DefaultForcedFlag = overrideConfig.Defaults.Mux.DefaultForcedFlag ?? baseConfig.Defaults.Mux.DefaultForcedFlag
+                },
+                Translate = new TranslateDefaults
+                {
+                    SourceLanguage = overrideConfig.Defaults.Translate.SourceLanguage ?? baseConfig.Defaults.Translate.SourceLanguage,
+                    TargetLanguage = overrideConfig.Defaults.Translate.TargetLanguage ?? baseConfig.Defaults.Translate.TargetLanguage
                 }
             }
         };

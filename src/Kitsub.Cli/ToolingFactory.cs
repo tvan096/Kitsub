@@ -1,5 +1,6 @@
 // Summary: Builds tooling contexts, logging, and run options used by CLI commands.
 using Kitsub.Tooling;
+using Kitsub.Tooling.Translation;
 using Kitsub.Tooling.Provisioning;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -93,6 +94,8 @@ public static class ToolingFactory
         services.AddSingleton<MkvmergeMuxer>();
         services.AddSingleton<MkvpropeditClient>();
         services.AddSingleton<FfmpegClient>();
+        services.AddSingleton<ISubtitleTranslationClient, OpenAiSubtitleTranslationClient>();
+        services.AddSingleton<SubtitleTranslationService>();
         services.AddSingleton<KitsubService>();
         services.AddLogging(builder => builder.AddSerilog(logger, dispose: true));
 

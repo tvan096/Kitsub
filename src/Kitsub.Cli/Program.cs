@@ -106,6 +106,13 @@ public static class Program
                 convert.AddCommand<ConvertSubCommand>("sub").WithDescription("Convert subtitle file.");
             });
 
+            config.AddBranch("translate", translate =>
+            {
+                // Block: Configure commands for subtitle translation tasks.
+                translate.SetDescription("Translate subtitles.");
+                translate.AddCommand<TranslateSubCommand>("sub").WithDescription("Translate subtitle file with OpenAI.");
+            });
+
             config.AddBranch("tools", tools =>
             {
                 // Block: Configure commands for tool status and cache management.

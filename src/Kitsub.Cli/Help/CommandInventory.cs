@@ -20,6 +20,7 @@ public static class CommandInventory
         "extract sub",
         "extract video",
         "convert sub",
+        "translate sub",
         "tools status",
         "tools fetch",
         "tools clean",

@@ -25,6 +25,7 @@ Documentation is organized into stable, standalone guides and a docs/ hub for lo
 - Subtitle muxing and burning.
 - Track extraction.
 - Subtitle conversion.
+- Subtitle translation with OpenAI.
 - Font handling for MKV outputs.
 - External tool management and provisioning.
 
