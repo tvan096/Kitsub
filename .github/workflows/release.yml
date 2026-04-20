@@ -78,7 +78,7 @@ jobs:
           "${hash}  ${archiveName}" | Out-File -FilePath "${archivePath}.sha256" -Encoding ascii
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             ${{ env.DIST_DIR }}/Kitsub-${{ github.ref_name }}-${{ env.RID }}.zip
